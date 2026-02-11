@@ -225,8 +225,9 @@
         animation: gradientShift 8s ease infinite;
         padding: 48px 56px;
         border-radius: 20px;
-        box-shadow: 0 12px 48px rgba(201, 169, 97, 0.4),
-                    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        box-shadow:
+          0 12px 48px rgba(201, 169, 97, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
         position: relative;
         overflow: hidden;
       }
@@ -1482,21 +1483,31 @@
     <footer class="footer">
       <p>© 2026 شركة الرمز للعقارات. جميع الحقوق محفوظة.</p>
       <p style="margin-top: 8px">البوابة الداخلية - نسخة 2.0</p>
-      <p style="margin-top: 8px; font-size: 12px; color: var(--mid-gray)">هذا فقط تجريبي - عرض توضيحي</p>
+      <p style="margin-top: 8px; font-size: 12px; color: var(--mid-gray)">
+        هذا فقط تجريبي - عرض توضيحي
+      </p>
     </footer>
 
     <script>
       // Live Date and Time
       function updateDateTime() {
         const now = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const dateStr = now.toLocaleDateString('ar-SA', options);
-        const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
-        
-        document.getElementById('currentDate').textContent = dateStr;
-        document.getElementById('currentTime').textContent = timeStr;
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        const dateStr = now.toLocaleDateString("ar-SA", options);
+        const timeStr = now.toLocaleTimeString("ar-SA", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        document.getElementById("currentDate").textContent = dateStr;
+        document.getElementById("currentTime").textContent = timeStr;
       }
-      
+
       updateDateTime();
       setInterval(updateDateTime, 1000);
 
