@@ -2368,6 +2368,60 @@
         `;
         document.head.appendChild(style);
       }
+
+      // Popup Modal Functionality
+      const submitMoodBtn = document.querySelector(".submit-mood");
+      const popupOverlay = document.createElement("div");
+      popupOverlay.className = "popup-overlay";
+      popupOverlay.innerHTML = `
+        <div class="popup-content">
+          <button class="popup-close">&times;</button>
+          <h3 class="popup-title">شكراً لك!</h3>
+          <div class="popup-video-container">
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(popupOverlay);
+
+      const closeBtn = popupOverlay.querySelector(".popup-close");
+
+      submitMoodBtn.addEventListener("click", function () {
+        const selected = document.querySelector(".mood-btn.selected");
+        if (selected) {
+          popupOverlay.classList.add("active");
+        } else {
+          alert("الرجاء اختيار تقييم أولاً");
+        }
+      });
+
+      closeBtn.addEventListener("click", function () {
+        popupOverlay.classList.remove("active");
+        // Stop the video by removing the iframe and recreating it
+        const iframe = popupOverlay.querySelector("iframe");
+        const videoUrl = iframe.src;
+        iframe.src = "";
+        setTimeout(() => {
+          iframe.src = videoUrl;
+        }, 100);
+      });
+
+      popupOverlay.addEventListener("click", function (e) {
+        if (e.target === popupOverlay) {
+          popupOverlay.classList.remove("active");
+          const iframe = popupOverlay.querySelector("iframe");
+          const videoUrl = iframe.src;
+          iframe.src = "";
+          setTimeout(() => {
+            iframe.src = videoUrl;
+          }, 100);
+        }
+      });
     </script>
   </body>
 </html>
