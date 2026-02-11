@@ -216,45 +216,143 @@
       .welcome-card {
         background: linear-gradient(
           135deg,
-          var(--primary-gold) 0%,
-          var(--accent-gold) 100%
+          #b8960f 0%,
+          var(--primary-gold) 30%,
+          var(--accent-gold) 70%,
+          #f4d03f 100%
         );
-        padding: 48px;
-        border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(201, 169, 97, 0.3);
+        background-size: 200% 200%;
+        animation: gradientShift 8s ease infinite;
+        padding: 48px 56px;
+        border-radius: 20px;
+        box-shadow: 0 12px 48px rgba(201, 169, 97, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
         position: relative;
         overflow: hidden;
       }
 
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Decorative patterns */
       .welcome-card::before {
         content: "";
         position: absolute;
-        top: 0;
-        right: 0;
-        width: 400px;
-        height: 400px;
+        top: -100px;
+        right: -100px;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.15) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+
+      .welcome-card::after {
+        content: "";
+        position: absolute;
+        bottom: -50px;
+        left: -50px;
+        width: 200px;
+        height: 200px;
         background: radial-gradient(
           circle,
           rgba(255, 255, 255, 0.1) 0%,
           transparent 70%
         );
         border-radius: 50%;
-        transform: translate(30%, -30%);
+      }
+
+      .welcome-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      .welcome-text {
+        flex: 1;
+      }
+
+      .welcome-icon {
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 56px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .date-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 500;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .date-badge i {
+        opacity: 0.8;
       }
 
       .welcome-card h1 {
-        font-size: 36px;
+        font-size: 42px;
         font-weight: 800;
         color: var(--white);
-        margin-bottom: 12px;
+        margin-bottom: 16px;
         font-family: "Cairo", sans-serif;
-        position: relative;
+        line-height: 1.3;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
 
       .welcome-card p {
-        font-size: 18px;
-        color: rgba(255, 255, 255, 0.9);
-        position: relative;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.95);
+        line-height: 1.6;
+        font-weight: 300;
+      }
+
+      @media (max-width: 900px) {
+        .welcome-content {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .welcome-icon {
+          order: -1;
+        }
+
+        .welcome-card h1 {
+          font-size: 32px;
+        }
+
+        .welcome-card p {
+          font-size: 16px;
+        }
       }
 
       /* Quick Access Systems */
@@ -988,8 +1086,21 @@
     <!-- Welcome Section -->
     <section class="welcome-section">
       <div class="welcome-card">
-        <h1>أهلاً أحمد، يسعدنا تواجدك معنا في بوابتك الداخلية</h1>
-        <p>نتمنى لك يوماً مليئاً بالإنجازات والنجاح</p>
+        <div class="welcome-content">
+          <div class="welcome-text">
+            <div class="date-badge">
+              <i class="fa-regular fa-calendar"></i>
+              <span id="currentDate"></span>
+              <span>|</span>
+              <span id="currentTime"></span>
+            </div>
+            <h1>أهلاً أحمد، يسعدنا تواجدك معنا في بوابتك الداخلية</h1>
+            <p>نتمنى لك يوماً مليئاً بالإنجازات والنجاح</p>
+          </div>
+          <div class="welcome-icon">
+            <i class="fa-solid fa-house-chimney-user"></i>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1375,6 +1486,20 @@
     </footer>
 
     <script>
+      // Live Date and Time
+      function updateDateTime() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateStr = now.toLocaleDateString('ar-SA', options);
+        const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+        
+        document.getElementById('currentDate').textContent = dateStr;
+        document.getElementById('currentTime').textContent = timeStr;
+      }
+      
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+
       // Mood Tracker Interaction
       document.querySelectorAll(".mood-btn").forEach((btn) => {
         btn.addEventListener("click", function () {
